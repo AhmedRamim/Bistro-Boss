@@ -1,19 +1,30 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { AuthContext } from '../../../providers/AuthProvider';
+import { FaShoppingCart } from 'react-icons/fa';
+import useCart from '../../../hooks/useCarts';
 
 const NavBar = () => {
+    const [cart] = useCart()
+    const { user, logOut } = useContext(AuthContext)
+    const handleLogOut = () => {
+        logOut()
+            .then(result => { })
+            .catch(err => console.log(err))
+    }
     const navOptions = <>
-        <li><a>Item 1</a></li>
-        <li tabIndex={0}>
-            <a>
-                Parent
-                <svg className="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
-            </a>
-            <ul className="p-2">
-                <li><a>Submenu 1</a></li>
-                <li><a>Submenu 2</a></li>
-            </ul>
-        </li>
-        <li><a>Item 3</a></li>
+        <li className='hover:text-orange-500 transition-all duration-100'><Link to={'/'}>Home</Link></li>
+        <li className='hover:text-orange-500 transition-all duration-100'><Link to={'/menu'}>Our Menu</Link></li>
+        <li className='hover:text-orange-500 transition-all duration-100'><Link to={'/Order/Salad'}>Order Food</Link></li>
+        {user ? <li className='hover:text-orange-500 transition-all duration-100'><button onClick={handleLogOut}>LogOut</button></li> : <li className='hover:text-orange-500 transition-all duration-100'><Link to={'/login'}>Login</Link></li>}
+        <li className='hover:text-orange-500 transition-all duration-100'>
+            <Link to={'/dashboard/mycart'}>
+                <button className="flex gap-1">
+                    <FaShoppingCart size={24}/>
+                    <div className="absolute top-0 left-10"><span className='text-red-400'>{cart?.length || 0}</span></div>
+                </button>
+            </Link></li>
+
     </>
 
     return (
