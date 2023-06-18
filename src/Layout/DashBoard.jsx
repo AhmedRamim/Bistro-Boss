@@ -3,11 +3,13 @@ import { Helmet } from 'react-helmet-async';
 import { FaBook, FaCalendarAlt, FaHamburger, FaHome, FaPizzaSlice, FaShoppingCart, FaUser, FaUtensilSpoon, FaUtensils, FaWallet } from 'react-icons/fa';
 import { NavLink, Outlet } from 'react-router-dom';
 import useCart from '../hooks/useCarts';
+import useAdmin from '../hooks/useAdmin';
 
 const DashBoard = () => {
     const [cart] = useCart()
     // TODO: load data on the server have dynamic on the database
-    const isAdmin = true;
+    // const isAdmin = true;
+    const [isAdmin] = useAdmin()
 
 
 
@@ -32,7 +34,7 @@ const DashBoard = () => {
                         isAdmin ? <>
                             <li><NavLink to={'/dashboard/home'}><FaHome /> Admin Home </NavLink></li>
                             <li><NavLink to={'/dashboard/reservation'}><FaUtensils/> Reservation </NavLink></li>
-                            <li><NavLink to={'/dashboard/paymentHistory'}><FaWallet /> Add Items</NavLink></li>
+                            <li><NavLink to={'/dashboard/additem'}><FaWallet /> Add Items</NavLink></li>
                             <li><NavLink to={'/dashboard/paymentHistory'}><FaBook/> Manage Bookings</NavLink></li>
                             <li><NavLink to={'/dashboard/allusers'}><FaUser/> All Users</NavLink></li>
                             
